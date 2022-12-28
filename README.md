@@ -1,4 +1,4 @@
-# Chat-GPT
-Ai-Chat
+# 智能搜题api可以找3180862489购买五块钱一条
+小新ai
 
 online:  qq3180862489
