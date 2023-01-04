@@ -175,117 +175,83 @@
 </html>
 
 
-<!-- 以下代码是阻止浏览器开发者工具正常使用代码防止别人看到你的源代码直接隐藏掉 -->
-<script type="text/javascript">
-  ((function() {
-      var callbacks = [],
-      timeLimit = 50,
-      open = false;
-      setInterval(loop, 1);
-      return {
-          addListener: function(fn) {
-              callbacks.push(fn);
-          },
-          cancleListenr: function(fn) {
-              callbacks = callbacks.filter(function(v) {
-                  return v !== fn;
-              });
-          }
-      }
-      function loop() {
-          var startTime = new Date();
-          debugger;
-          if (new Date() - startTime > timeLimit) {
-              if (!open) {
-                  callbacks.forEach(function(fn) {
-                      fn.call(null);
-                  });
-              }
-              open = true;
-              window.stop();
-              alert('禁止查看');
-              window.location.reload();
-          } else {
-              open = false;
-          }
-      }
-  })())
-  .addListener(function() {
-      window.location.reload();
-  });
-  </script>
-  
   <!-- 以下是禁止浏览器查看代码 -->
   <script language=JavaScript>
-function click1(){
-if (event. button==2) {
-alert('禁止右键复制!')} }
-function CtrlKeyDown(){
-if(event. ctrlKey){
-alert('不当的拷贝将损害您的系统!')}} 
-document. οnkeydοwn=CtrlKeyDown; 
-document. onselectstart=click; 
-document. οnmοusedοwn=click1; 
-  </script>
-
-<!-- 以下是禁止快捷键查看代码 -->
-<script language=JavaScript>
-  document.onkeydown = function() {
-var e = window.event || arguments[0];
-if (e.keyCode == 123) {
-alert('禁止F12');
-return false;
-} else if ((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)) {
-alert('禁止Ctrl+Shift+I');
-return false;
-} else if ((e.ctrlKey) && (e.keyCode == 85)) {
-alert('禁止Ctrl+u');
-return false;
-} else if ((e.ctrlKey) && (e.keyCode == 83)) {
-alert('禁止Ctrl+s');
-return false;
-}
-}
-// 屏蔽鼠标右键
-document.oncontextmenu = function() {
-alert('禁止右键');
-return false;
-}
-</script>
-
-<script language=JavaScript>
-//禁用调试工具
-var threshold = 160; // 打开控制台的宽或高阈值
-// 每秒检查一次
-var check = setInterval(function() {
-    if (window.outerWidth - window.innerWidth > threshold || 
-        window.outerHeight - window.innerHeight > threshold) {
-        // 如果打开控制台，则刷新页面
-        window.location.reload();
+    function click1(){
+    if (event. button==2) {
+    alert('禁止右键复制!')} }
+    function CtrlKeyDown(){
+    if(event. ctrlKey){
+    alert('不当的拷贝将损害您的系统!')}} 
+    document. οnkeydοwn=CtrlKeyDown; 
+    document. onselectstart=click; 
+    document. οnmοusedοwn=click1; 
+      </script>
+    
+    <!-- 以下是禁止快捷键查看代码 -->
+    <script language=JavaScript>
+      document.onkeydown = function() {
+    var e = window.event || arguments[0];
+    if (e.keyCode == 123) {
+    alert('禁止F12');
+    return false;
+    } else if ((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)) {
+    alert('禁止Ctrl+Shift+I');
+    return false;
+    } else if ((e.ctrlKey) && (e.keyCode == 85)) {
+    alert('禁止Ctrl+u');
+    return false;
+    } else if ((e.ctrlKey) && (e.keyCode == 83)) {
+    alert('禁止Ctrl+s');
+    return false;
     }
-}, 1000)
-</script>
-
-<script>
-  <!-- 禁用右键（防止右键查看源代码）-->
-window.oncontextmenu = function() {
-return false;
-}
-<!--禁止任何键盘敲击事件（防止F12和shift+ctrl+i调起开发者工具） -->
-window.onkeydown = window.onkeyup = window.onkeypress = function() {
-window.event.returnValue = false;
-return false;
-}
-<!-- 如果用户在工具栏调起开发者工具，那么判断浏览器的可视高度和可视宽度是否有改变，如有改变则关闭本页面 -->
-var h = window.innerHeight,
-w = window.innerWidth;
-window.onresize = function() {
-if (h != window.innerHeight || w != window.innerWidth) {
-debugger
-alert("达咩，不可以。")
-// window.close();
-window.location = "about:blank";
-
-}
-}
-</script>
+    }
+    // 屏蔽鼠标右键
+    document.oncontextmenu = function() {
+    alert('禁止右键');
+    return false;
+    }
+    </script>
+    
+    <script language=JavaScript>
+      //禁用调试工具
+      var threshold = 120; // 打开控制台的宽或高阈值
+      // 每秒检查一次
+      var check = setInterval(function() {
+    //达到一定阈值，直接触发，立刻关闭该网页并重复打开3次baidu.com，并且覆盖3次历史浏览防止再次打开能看到源代码
+    if (window.outerWidth - window.innerWidth > threshold || 
+              window.outerHeight - window.innerHeight > threshold) {
+                debugger
+           alert("达咩，不可以。")
+    
+                if (window.location != "https://www.baidu.com") { 
+        for(let i=0;i<3;i++){
+            window.location = "https://www.baidu.com"; 
+            history.replaceState({}, ''); //覆盖历史记录，防止打开能看到源代码
+        }  
+    }
+    
+          }   }, 10)  </script>
+      
+    
+          <script>
+             <!-- 禁用右键（防止右键查看源代码）-->
+       window.oncontextmenu = function() {
+         return false;
+       }
+    
+       //<!-- 如果用户在工具栏调起开发者工具，那么判断浏览器的可视高度和可视宽度是否有改变，如有改变则关闭本页面 -->
+       var h = window.innerHeight,
+         w = window.innerWidth;
+       window.onresize = function() {
+         if (h != window.innerHeight || w != window.innerWidth) {
+           debugger
+           alert("达咩，不可以。")
+           window.close();
+           for(var i=0;i<4;i++){
+               window.location.replace("http://www.baidu.com");
+           }
+         }
+           }
+    </script>
+    
