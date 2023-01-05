@@ -213,45 +213,50 @@
     }
     </script>
     
-    <script language=JavaScript>
-      //禁用调试工具
-      var threshold = 120; // 打开控制台的宽或高阈值
-      // 每秒检查一次
-      var check = setInterval(function() {
-    //达到一定阈值，直接触发，立刻关闭该网页并重复打开3次baidu.com，并且覆盖3次历史浏览防止再次打开能看到源代码
-    if (window.outerWidth - window.innerWidth > threshold || 
+    <script>
+      // 如果是手机端则不检测
+      if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+        //禁用调试工具
+        var threshold = 120; // 打开控制台的宽或高阈值
+        // 每秒检查一次
+        var check = setInterval(function() {
+          //达到一定阈值，直接触发，立刻关闭该网页并重复打开3次baidu.com，并且覆盖3次历史浏览防止再次打开能看到源代码
+          if (window.outerWidth - window.innerWidth > threshold || 
               window.outerHeight - window.innerHeight > threshold) {
-                debugger
-           alert("达咩，不可以。")
-    
-                if (window.location != "https://www.baidu.com") { 
-        for(let i=0;i<3;i++){
-            window.location = "https://www.baidu.com"; 
-            history.replaceState({}, ''); //覆盖历史记录，防止打开能看到源代码
-        }  
-    }
-    
-          }   }, 10)  </script>
+            debugger
+            alert("达咩，不可以。")
+            
+            if (window.location != "https://www.baidu.com") { 
+              for(let i=0;i<3;i++){
+                window.location = "https://www.baidu.com"; 
+                history.replaceState({}, ''); //覆盖历史记录，防止打开能看到源代码
+              }  
+            }
+            
+          }   }, 10)
+      }
       
-    
-          <script>
-             <!-- 禁用右键（防止右键查看源代码）-->
-       window.oncontextmenu = function() {
-         return false;
-       }
-    
-       //<!-- 如果用户在工具栏调起开发者工具，那么判断浏览器的可视高度和可视宽度是否有改变，如有改变则关闭本页面 -->
-       var h = window.innerHeight,
-         w = window.innerWidth;
-       window.onresize = function() {
-         if (h != window.innerHeight || w != window.innerWidth) {
-           debugger
-           alert("达咩，不可以。")
-           window.close();
-           for(var i=0;i<4;i++){
-               window.location.replace("http://www.baidu.com");
-           }
-         }
-           }
-    </script>
-    
+      //<!-- 禁用右键（防止右键查看源代码）-->
+      window.oncontextmenu = function() {
+        return false;
+      }
+      
+      // 如果是手机端则不检测
+    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+      //<!-- 如果用户在工具栏调起开发者工具，那么判断浏览器的可视高度和可视宽度是否有改变，如有改变则关闭本页面 -->
+      var h = window.innerHeight,
+        w = window.innerWidth;
+      window.onresize = function() {
+        if (h != window.innerHeight || w != window.innerWidth) {
+          debugger
+          alert("达咩，不可以。")
+          window.close();}
+          for(var i=0;i<4;i++){
+            window.location.replace("http://www.baidu.com");
+            history.replaceState({}, ''); //覆盖历史记录，防止打开能看到源代码
+          }
+        }
+      }
+      </script>
+  
+  
